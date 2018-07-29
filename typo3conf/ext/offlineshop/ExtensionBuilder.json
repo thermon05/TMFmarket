@@ -1,0 +1,39 @@
+{
+    "modules": [],
+    "properties": {
+        "backendModules": [],
+        "description": "",
+        "emConf": {
+            "category": "templates",
+            "custom_category": "",
+            "dependsOn": "typo3 => 8.6.0-8.7.99\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "skipGenerateDocumentationTemplate": false,
+            "sourceLanguage": "en",
+            "state": "alpha",
+            "targetVersion": "8.7.0-8.7.99",
+            "version": "1.0.0"
+        },
+        "extensionKey": "offlineshop",
+        "name": "Shop Template",
+        "originalExtensionKey": "",
+        "originalVendorName": "",
+        "persons": [
+            {
+                "company": "",
+                "email": "",
+                "name": "FRoemer",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [],
+        "vendorName": "Froemer"
+    },
+    "wires": [],
+    "log": {
+        "last_modified": "2018-07-25 08:55",
+        "extension_builder_version": "8.7.0",
+        "be_user": " (1)"
+    }
+}

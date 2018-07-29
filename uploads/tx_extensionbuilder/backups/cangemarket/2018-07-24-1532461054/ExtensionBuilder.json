@@ -1,0 +1,39 @@
+{
+    "modules": [],
+    "properties": {
+        "backendModules": [],
+        "description": "Template for an eShop",
+        "emConf": {
+            "category": "templates",
+            "custom_category": "",
+            "dependsOn": "typo3 => 8.7.0-8.7.99\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "skipGenerateDocumentationTemplate": false,
+            "sourceLanguage": "en",
+            "state": "alpha",
+            "targetVersion": "8.7.0-8.7.99",
+            "version": "1.0.0"
+        },
+        "extensionKey": "cangemarket",
+        "name": "Cange Supermarket Template",
+        "originalExtensionKey": "",
+        "originalVendorName": "",
+        "persons": [
+            {
+                "company": "",
+                "email": "",
+                "name": "F R\u00f6mer",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [],
+        "vendorName": "FRoemer"
+    },
+    "wires": [],
+    "log": {
+        "last_modified": "2018-07-24 07:39",
+        "extension_builder_version": "8.7.0",
+        "be_user": " (1)"
+    }
+}
