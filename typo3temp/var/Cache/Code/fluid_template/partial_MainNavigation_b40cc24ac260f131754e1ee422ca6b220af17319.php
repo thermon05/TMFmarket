@@ -1,6 +1,6 @@
 <?php
 
-class partial_MainNavigation_0263e323df60897208e9029d040d76f12c4ad753 extends \TYPO3Fluid\Fluid\Core\Compiler\AbstractCompiledTemplate {
+class partial_MainNavigation_b40cc24ac260f131754e1ee422ca6b220af17319 extends \TYPO3Fluid\Fluid\Core\Compiler\AbstractCompiledTemplate {
 
 public function getLayoutName(\TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
 $self = $this; 

@@ -90,7 +90,7 @@ page.10 {
       pagets__1spalte = TEXT
       pagets__1spalte.value = 1spalte
 
-      default < .pagets__2spalten
+      default < .pagets__1spalte
     }
     siteTitle = TEXT
     siteTitle {
