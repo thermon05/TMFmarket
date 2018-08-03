@@ -131,6 +131,9 @@ return [
         'extension_builder' => [
             'packagePath' => 'typo3conf/ext/extension_builder/',
         ],
+        'mask' => [
+            'packagePath' => 'typo3conf/ext/mask/',
+        ],
         'offlineshop' => [
             'packagePath' => 'typo3conf/ext/offlineshop/',
         ],

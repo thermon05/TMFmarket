@@ -4138,7 +4138,7 @@ return array (
             'type' => 'input',
             'renderType' => 'inputDateTime',
             'eval' => 'date',
-            'default' => 1532890550,
+            'default' => 1533303809,
           ),
         ),
         'content_modification_date' => 
@@ -4152,7 +4152,7 @@ return array (
             'type' => 'input',
             'renderType' => 'inputDateTime',
             'eval' => 'date',
-            'default' => 1532890550,
+            'default' => 1533303809,
           ),
         ),
         'note' => 
@@ -9025,6 +9025,7 @@ return array (
             'default' => 'text',
             'authMode' => 'explicitAllow',
             'authMode_enforce' => 'strict',
+            'itemsProcFunc' => 'MASK\\Mask\\ItemsProcFuncs\\CTypeList->itemsProcFunc',
           ),
         ),
         'editlock' => 
@@ -9383,7 +9384,7 @@ return array (
           array (
             'type' => 'select',
             'renderType' => 'selectSingle',
-            'itemsProcFunc' => 'TYPO3\\CMS\\Backend\\View\\BackendLayoutView->colPosListItemProcFunc',
+            'itemsProcFunc' => 'MASK\\Mask\\ItemsProcFuncs\\ColPosList->itemsProcFunc',
             'items' => 
             array (
               0 => 
@@ -9408,6 +9409,7 @@ return array (
               ),
             ),
             'default' => 0,
+            'm_itemsProcFunc' => 'TYPO3\\CMS\\Backend\\View\\BackendLayoutView->colPosListItemProcFunc',
           ),
         ),
         'date' => 
