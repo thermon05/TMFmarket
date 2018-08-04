@@ -290,3 +290,18 @@ ul.tx-indexedsearch-browsebox, .tx-indexedsearch-browsebox li {
 	display: inline-block;
 	background: rgba(255,255,0,.5);
 }
+
+####Fritznel styling ###
+.frame-bluebox, .frame-greybox {
+	padding: 1rem;
+	margin: 0 0 0 0rem;
+}
+
+.frame-bluebox {
+	background: #006;
+	color: #fff;
+}
+
+.frame-bluebox a, .frame-bluebox a:visited { color: #ff0; }
+
+.frame-greybox { background: #ccc; }

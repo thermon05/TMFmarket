@@ -4138,7 +4138,7 @@ return array (
             'type' => 'input',
             'renderType' => 'inputDateTime',
             'eval' => 'date',
-            'default' => 1533303809,
+            'default' => 1533375488,
           ),
         ),
         'content_modification_date' => 
@@ -4152,7 +4152,7 @@ return array (
             'type' => 'input',
             'renderType' => 'inputDateTime',
             'eval' => 'date',
-            'default' => 1533303809,
+            'default' => 1533375488,
           ),
         ),
         'note' => 

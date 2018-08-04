@@ -1,6 +1,6 @@
 <?php
 
-class partial_DropIn_After_All_1ed04147dba5721a56ad9b3c23fbf05556703d2e extends \TYPO3Fluid\Fluid\Core\Compiler\AbstractCompiledTemplate {
+class partial_SearchForm_ffea5b9353051224d3360030cc33639b1aa59cad extends \TYPO3Fluid\Fluid\Core\Compiler\AbstractCompiledTemplate {
 
 public function getLayoutName(\TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
 $self = $this; 
@@ -24,10 +24,6 @@ $renderingContext->getViewHelperResolver()->addNamespaces(array (
   array (
     0 => 'TYPO3\\CMS\\Form\\ViewHelpers',
   ),
-  'ce' => 
-  array (
-    0 => 'TYPO3\\CMS\\FluidStyledContent\\ViewHelpers',
-  ),
 ));
 }
 
@@ -36,22 +32,15 @@ $renderingContext->getViewHelperResolver()->addNamespaces(array (
  */
 public function render(\TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
 $self = $this;
-$output0 = '';
 
-$output0 .= '
+return '<!-- Suche -->
+<div class="searchform text-sm-right">
+  <form class="form-inline">
+    <input type="search" class="form-control" placeholder="Suche">
+    <button type="submit" class="btn btn-primary">Suche</button>
+  </form>
+</div>
 ';
-// Rendering ViewHelper TYPO3Fluid\Fluid\ViewHelpers\CommentViewHelper
-$renderChildrenClosure2 = function() use ($renderingContext, $self) {
-return 'DropIn Placeholder. Will be rendered after all other output inside the wrapping container.';
-};
-$arguments1 = array();
-
-$output0 .= NULL;
-
-$output0 .= '
-';
-
-return $output0;
 }
 
 
