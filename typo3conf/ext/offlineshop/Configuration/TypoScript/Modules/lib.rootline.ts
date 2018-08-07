@@ -1,23 +1,42 @@
+## Rootline [BEGIN]
+
 lib.rootline = HMENU
-lib.rootline {
 
-  special = rootline
-  special.range = 0|-1
-  wrap =<div class="container rootline"><ol class="breadcrumb">|</ol></div>
+# Rootline type
+lib.rootline.special = rootline
+//area of rootline, where I start, where I stop. ex: -6|-1
+lib.rootline.special.range = rootline
 
-1 = TMENU
-  1 {
-    NO = 1
-    NO {
-      allwrap = <li class="breadcrumb-item">|</li>
-      stdWrap.htmlSpecialChars = 1
-      ATagTitle.field = description // subtitle // title
-    }
-    CUR < .NO
-    CUR {
-      doNotLinkIt = 1
-      allWrap = <li class="breadcrumb-item active">|</li>
-      }
-  }
+# Premier niveau, textuelle
+lib.rootline.1 = TMENU
 
+## DEFINE LANGUAGE [BEGIN]
+
+## DEFAULT LANGUAGE
+		lib.rootline.1.wrap = <ul id="rootline"><li class="{$rootlineMsgClass}">{$rootlineMsg_0}</li> |</ul><div class="clearBoth"></div>
+
+## LANGUAGE 1
+	[globalVar = GP:L = 1]
+		lib.rootline.1.wrap = <ul id="rootline"><li class="{$rootlineMsgClass}">{$rootlineMsg_1}</li> |</ul><div class="clearBoth"></div>
+	[global]
+## LANGUAGE 2
+	[globalVar = GP:L = 2]
+		lib.rootline.1.wrap = <ul id="rootline"><li class="{$rootlineMsgClass}">{$rootlineMsg_2}</li> |</ul><div class="clearBoth"></div>
+	[global]
+
+
+## DEFINE LANGUAGE [END]
+
+lib.rootline.1.NO{
+	linkWrap = <li class="{$rootlineClass}">|</li>
+	subst_elementUid = 1
 }
+
+//effects on current element
+lib.rootline.1.CUR = 1
+lib.rootline.1.CUR {
+	linkWrap = <li class="{$rootlineActifClass}">|</li>
+	doNotLinkIt = 1
+}
+
+## Rootline [END]

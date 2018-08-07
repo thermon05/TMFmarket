@@ -65,6 +65,9 @@ page.10 {
     content3 < .content0
     content3.select.where = colPos=3
 
+    content4 < .content0
+    content4.select.where = colPos=4
+
     content5 < .content0
     content5.select.where = colPos=5
 
