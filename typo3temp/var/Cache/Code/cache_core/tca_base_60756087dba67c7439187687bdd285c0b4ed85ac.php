@@ -1353,6 +1353,8 @@ return array (
           'page-contentFromPid-root' => 'apps-pagetree-page-content-from-page-root',
           'page-contentFromPid-hideinmenu' => 'apps-pagetree-page-content-from-page-hideinmenu',
           'default' => 'apps-pagetree-page-default',
+          181 => 'icon-apps-pagetree-page-cart-cart',
+          182 => 'icon-apps-pagetree-page-cart-product',
         ),
         'searchFields' => 'title,alias,nav_title,subtitle,url,keywords,description,abstract,author,author_email',
       ),
@@ -1436,6 +1438,18 @@ return array (
                 0 => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.doktype.I.7',
                 1 => '199',
                 2 => 'apps-pagetree-spacer',
+              ),
+              11 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:pages.doktype.181',
+                1 => 181,
+                2 => 'icon-apps-pagetree-page-cart-cart',
+              ),
+              12 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:pages.doktype.182',
+                1 => 182,
+                2 => 'icon-apps-pagetree-page-cart-product',
               ),
             ),
             'default' => '1',
@@ -2597,7 +2611,7 @@ return array (
       array (
         1 => 
         array (
-          'showitem' => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,title,parent,--div--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_category.tabs.items,items,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,--palette--;;language,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,hidden,--palette--;;timeRestriction,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,description,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended',
+          'showitem' => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,title,parent,--div--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_category.tabs.items,items,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,--palette--;;language,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,hidden,--palette--;;timeRestriction,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.options,images,description,cart_product_list_pid,cart_product_single_pid,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended',
         ),
       ),
       'palettes' => 
@@ -2797,6 +2811,11 @@ return array (
               array (
                 0 => 'categories',
               ),
+              'tx_cart_domain_model_product_product' => 
+              array (
+                0 => 'main_category',
+                1 => 'categories',
+              ),
             ),
             'size' => 10,
             'fieldWizard' => 
@@ -2804,6 +2823,137 @@ return array (
               'recordsOverview' => 
               array (
                 'disabled' => true,
+              ),
+            ),
+          ),
+        ),
+        'images' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_category.image',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'sys_file_reference',
+            'foreign_field' => 'uid_foreign',
+            'foreign_sortby' => 'sorting_foreign',
+            'foreign_table_field' => 'tablenames',
+            'foreign_match_fields' => 
+            array (
+              'fieldname' => 'images',
+              'tablenames' => 'sys_category',
+              'table_local' => 'sys_file',
+            ),
+            'foreign_label' => 'uid_local',
+            'foreign_selector' => 'uid_local',
+            'overrideChildTca' => 
+            array (
+              'columns' => 
+              array (
+                'uid_local' => 
+                array (
+                  'config' => 
+                  array (
+                    'appearance' => 
+                    array (
+                      'elementBrowserType' => 'file',
+                      'elementBrowserAllowed' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'filter' => 
+            array (
+              0 => 
+              array (
+                'userFunc' => 'TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren',
+                'parameters' => 
+                array (
+                  'allowedFileExtensions' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg',
+                  'disallowedFileExtensions' => '',
+                ),
+              ),
+            ),
+            'appearance' => 
+            array (
+              'useSortable' => true,
+              'headerThumbnail' => 
+              array (
+                'field' => 'uid_local',
+                'width' => '45',
+                'height' => '45c',
+              ),
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => false,
+                'dragdrop' => true,
+                'sort' => false,
+                'hide' => true,
+                'delete' => true,
+              ),
+              'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
+              'showPossibleLocalizationRecords' => 1,
+              'showRemovedLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'showSynchronizationLink' => 1,
+            ),
+            'behaviour' => 
+            array (
+              'localizeChildrenAtParentLocalization' => true,
+              'allowLanguageSynchronization' => true,
+            ),
+          ),
+        ),
+        'cart_product_list_pid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_category.cart_product_list_pid',
+          'config' => 
+          array (
+            'type' => 'group',
+            'internal_type' => 'db',
+            'allowed' => 'pages',
+            'size' => 1,
+            'maxitems' => 1,
+            'minitems' => 0,
+            'default' => 0,
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'suggestOptions' => 
+            array (
+              'default' => 
+              array (
+                'searchWholePhrase' => true,
+              ),
+            ),
+          ),
+        ),
+        'cart_product_single_pid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_category.cart_product_single_pid',
+          'config' => 
+          array (
+            'type' => 'group',
+            'internal_type' => 'db',
+            'allowed' => 'pages',
+            'size' => 1,
+            'maxitems' => 1,
+            'minitems' => 0,
+            'default' => 0,
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'suggestOptions' => 
+            array (
+              'default' => 
+              array (
+                'searchWholePhrase' => true,
               ),
             ),
           ),
@@ -4138,7 +4288,7 @@ return array (
             'type' => 'input',
             'renderType' => 'inputDateTime',
             'eval' => 'date',
-            'default' => 1533667004,
+            'default' => 1533712906,
           ),
         ),
         'content_modification_date' => 
@@ -4152,7 +4302,7 @@ return array (
             'type' => 'input',
             'renderType' => 'inputDateTime',
             'eval' => 'date',
-            'default' => 1533667004,
+            'default' => 1533712906,
           ),
         ),
         'note' => 
@@ -10732,6 +10882,13 @@ return array (
             'type' => 'passthrough',
           ),
         ),
+        'tx_cart_domain_model_product_product' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
       ),
       'types' => 
       array (
@@ -11906,8 +12063,5461 @@ return array (
         ),
       ),
     ),
+    'tx_cart_domain_model_cart' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_cart',
+        'label' => 'uid',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => '',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'pid, f_hash, s_hash, fe_user, was_ordered, order_item, cart',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'pid, f_hash, s_hash, fe_user, was_ordered, order_item, cart',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'f_hash' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_cart.f_hash',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        's_hash' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_cart.s_hash',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'pid' => 
+        array (
+          'exclude' => 1,
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        'fe_user' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_cart.fe_user',
+          'config' => 
+          array (
+            'type' => 'select',
+            'readOnly' => 1,
+            'foreign_table' => 'fe_users',
+            'size' => 1,
+            'autoMaxSize' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+            'multiple' => 0,
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'was_ordered' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_cart.was_ordered',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'order_item' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_cart.order_item',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_item',
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'cart' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_cart.cart',
+          'config' => 
+          array (
+            'type' => 'text',
+            'cols' => 48,
+            'rows' => 15,
+            'eval' => 'required',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_address' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address',
+        'label' => 'uid',
+        'label_alt' => 'first_name, last_name, street, street_number, zip, city',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'first_name, last_name, street, zip, city',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Address.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'title, salutation, first_name, last_name, email, phone, fax, company, street, zip, city, country, phone, fax, additional',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'title, salutation, first_name, last_name, email, phone, fax, company, street, zip, city, country, phone, fax, additional',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'title' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'salutation' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.salutation',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'first_name' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.first_name',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'last_name' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.last_name',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'email' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.email',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'company' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.company',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'street' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.street',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'street_number' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.street_number',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'zip' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.zip',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'city' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.city',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'country' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.country',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'phone' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.phone',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'fax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.fax',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'additional' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.additional',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'discr' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_address.discr',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'item' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_discount' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount',
+        'label' => 'code',
+        'label_alt' => 'title',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'title',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Discount.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'title, code, gross, net, tax_class_id, tax',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'title, code, gross, net, tax_class_id, tax',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'title' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'code' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount.code',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'gross' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount.gross',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'net' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount.net',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax_class_id' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount.tax_class_id',
+          'config' => 
+          array (
+            'type' => 'select',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount.tax_class_id.1',
+                1 => 1,
+              ),
+            ),
+            'size' => 1,
+            'minitems' => 1,
+            'maxitems' => 1,
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'tax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_discount.tax',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'item' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_item' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item',
+        'label' => 'order_number',
+        'label_alt' => 'invoice_number',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'order_number, invoice_number',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Item.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'pid, cart_pid, fe_user, order_number, invoice_number, delivery_number, billing_address, shipping_address, gross, net, total_gross, total_net, additional, additional_data, tax_class, products, discounts, tax, total_tax, payment, shipping, comment',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'pid,fe_user,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.palettes.numbers;numbers,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.palettes.addresses;addresses,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.palettes.price;price,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.palettes.total_price;total_price,comment,additional,additional_data,tax_class,products,discounts,payment,shipping,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.palettes.documents;pdfs',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+        'addresses' => 
+        array (
+          'showitem' => 'billing_address, shipping_address',
+          'canNotCollapse' => 0,
+        ),
+        'numbers' => 
+        array (
+          'showitem' => 'order_number, order_date, --linebreak--, invoice_number, invoice_date, --linebreak--, delivery_number, delivery_date',
+          'canNotCollapse' => 1,
+        ),
+        'price' => 
+        array (
+          'showitem' => 'currency, --linebreak--, currency_code, currency_sign, currency_translation, --linebreak--, gross, net, --linebreak--, order_tax',
+          'canNotCollapse' => 1,
+        ),
+        'total_price' => 
+        array (
+          'showitem' => 'total_gross, total_net, --linebreak--, order_total_tax',
+          'canNotCollapse' => 1,
+        ),
+        'pdfs' => 
+        array (
+          'showitem' => 'order_pdfs, --linebreak--, invoice_pdfs, --linebreak--, delivery_pdfs',
+          'canNotCollapse' => 1,
+        ),
+      ),
+      'columns' => 
+      array (
+        'pid' => 
+        array (
+          'exclude' => 1,
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        'cart_pid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_category.cart_pid',
+          'config' => 
+          array (
+            'type' => 'group',
+            'internal_type' => 'db',
+            'allowed' => 'pages',
+            'size' => 1,
+            'maxitems' => 1,
+            'minitems' => 0,
+            'default' => 0,
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'suggestOptions' => 
+            array (
+              'default' => 
+              array (
+                'searchWholePhrase' => true,
+              ),
+            ),
+          ),
+        ),
+        'fe_user' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.fe_user',
+          'config' => 
+          array (
+            'type' => 'select',
+            'readOnly' => 1,
+            'foreign_table' => 'fe_users',
+            'size' => 1,
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.fe_user.not_available',
+                1 => 0,
+              ),
+            ),
+            'minitems' => 0,
+            'maxitems' => 1,
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'order_number' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.order_number',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'order_date' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.order_date',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => '8',
+            'eval' => 'date',
+            'checkbox' => '0',
+            'default' => '0',
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'invoice_number' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.invoice_number',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'invoice_date' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.invoice_date',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => '8',
+            'eval' => 'date',
+            'checkbox' => '0',
+            'default' => '0',
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'delivery_number' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.delivery_number',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'delivery_date' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.delivery_date',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => '8',
+            'eval' => 'date',
+            'checkbox' => '0',
+            'default' => '0',
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'billing_address' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.billing_address',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_address',
+            'foreign_field' => 'item',
+            'foreign_match_fields' => 
+            array (
+              'discr' => 'billing',
+            ),
+            'minitems' => 1,
+            'maxitems' => 1,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'shipping_address' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.shipping_address',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_address',
+            'foreign_field' => 'item',
+            'foreign_match_fields' => 
+            array (
+              'discr' => 'shipping',
+            ),
+            'minitems' => 0,
+            'maxitems' => 1,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'comment' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.comment',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'additional' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.additional',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'additional_data' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.additional_data',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'tax_class' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.tax_class',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_taxclass',
+            'foreign_field' => 'item',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'currency' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.currency',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'required',
+          ),
+        ),
+        'currency_code' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.currency_code',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'required',
+          ),
+        ),
+        'currency_sign' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.currency_sign',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'required',
+          ),
+        ),
+        'currency_translation' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.currency_translation',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2,required',
+          ),
+        ),
+        'gross' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.gross',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2,required',
+          ),
+        ),
+        'total_gross' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.total_gross',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2,required',
+          ),
+        ),
+        'net' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.net',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2,required',
+          ),
+        ),
+        'total_net' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.total_net',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2,required',
+          ),
+        ),
+        'tax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.tax',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_tax',
+            'maxitems' => 9999,
+          ),
+        ),
+        'total_tax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.total_tax',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_tax',
+            'maxitems' => 9999,
+          ),
+        ),
+        'products' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.products',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_product',
+            'foreign_field' => 'item',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'discounts' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.discounts',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_discount',
+            'foreign_field' => 'item',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'payment' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.payment',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_payment',
+            'foreign_field' => 'item',
+            'minitems' => 0,
+            'maxitems' => 1,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'shipping' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.shipping',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_shipping',
+            'foreign_field' => 'item',
+            'minitems' => 0,
+            'maxitems' => 1,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'order_pdfs' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.order_pdfs',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'sys_file_reference',
+            'foreign_field' => 'uid_foreign',
+            'foreign_sortby' => 'sorting_foreign',
+            'foreign_table_field' => 'tablenames',
+            'foreign_match_fields' => 
+            array (
+              'fieldname' => 'order_pdfs',
+              'tablenames' => 'tx_cart_domain_model_order_item',
+              'table_local' => 'sys_file',
+            ),
+            'foreign_label' => 'uid_local',
+            'foreign_selector' => 'uid_local',
+            'overrideChildTca' => 
+            array (
+              'columns' => 
+              array (
+                'uid_local' => 
+                array (
+                  'config' => 
+                  array (
+                    'appearance' => 
+                    array (
+                      'elementBrowserType' => 'file',
+                      'elementBrowserAllowed' => 'pdf',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'filter' => 
+            array (
+              0 => 
+              array (
+                'userFunc' => 'TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren',
+                'parameters' => 
+                array (
+                  'allowedFileExtensions' => 'pdf',
+                  'disallowedFileExtensions' => '',
+                ),
+              ),
+            ),
+            'appearance' => 
+            array (
+              'useSortable' => true,
+              'headerThumbnail' => 
+              array (
+                'field' => 'uid_local',
+                'width' => '45',
+                'height' => '45c',
+              ),
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => true,
+                'localize' => false,
+              ),
+            ),
+            'behaviour' => 
+            array (
+              'localizeChildrenAtParentLocalization' => true,
+            ),
+            'maxitems' => 99,
+          ),
+        ),
+        'invoice_pdfs' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.invoice_pdfs',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'sys_file_reference',
+            'foreign_field' => 'uid_foreign',
+            'foreign_sortby' => 'sorting_foreign',
+            'foreign_table_field' => 'tablenames',
+            'foreign_match_fields' => 
+            array (
+              'fieldname' => 'invoice_pdfs',
+              'tablenames' => 'tx_cart_domain_model_order_item',
+              'table_local' => 'sys_file',
+            ),
+            'foreign_label' => 'uid_local',
+            'foreign_selector' => 'uid_local',
+            'overrideChildTca' => 
+            array (
+              'columns' => 
+              array (
+                'uid_local' => 
+                array (
+                  'config' => 
+                  array (
+                    'appearance' => 
+                    array (
+                      'elementBrowserType' => 'file',
+                      'elementBrowserAllowed' => 'pdf',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'filter' => 
+            array (
+              0 => 
+              array (
+                'userFunc' => 'TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren',
+                'parameters' => 
+                array (
+                  'allowedFileExtensions' => 'pdf',
+                  'disallowedFileExtensions' => '',
+                ),
+              ),
+            ),
+            'appearance' => 
+            array (
+              'useSortable' => true,
+              'headerThumbnail' => 
+              array (
+                'field' => 'uid_local',
+                'width' => '45',
+                'height' => '45c',
+              ),
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => true,
+                'localize' => false,
+              ),
+            ),
+            'behaviour' => 
+            array (
+              'localizeChildrenAtParentLocalization' => true,
+            ),
+            'maxitems' => 99,
+          ),
+        ),
+        'delivery_pdfs' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.delivery_pdfs',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'sys_file_reference',
+            'foreign_field' => 'uid_foreign',
+            'foreign_sortby' => 'sorting_foreign',
+            'foreign_table_field' => 'tablenames',
+            'foreign_match_fields' => 
+            array (
+              'fieldname' => 'delivery_pdfs',
+              'tablenames' => 'tx_cart_domain_model_order_item',
+              'table_local' => 'sys_file',
+            ),
+            'foreign_label' => 'uid_local',
+            'foreign_selector' => 'uid_local',
+            'overrideChildTca' => 
+            array (
+              'columns' => 
+              array (
+                'uid_local' => 
+                array (
+                  'config' => 
+                  array (
+                    'appearance' => 
+                    array (
+                      'elementBrowserType' => 'file',
+                      'elementBrowserAllowed' => 'pdf',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'filter' => 
+            array (
+              0 => 
+              array (
+                'userFunc' => 'TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren',
+                'parameters' => 
+                array (
+                  'allowedFileExtensions' => 'pdf',
+                  'disallowedFileExtensions' => '',
+                ),
+              ),
+            ),
+            'appearance' => 
+            array (
+              'useSortable' => true,
+              'headerThumbnail' => 
+              array (
+                'field' => 'uid_local',
+                'width' => '45',
+                'height' => '45c',
+              ),
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => true,
+                'localize' => false,
+              ),
+            ),
+            'behaviour' => 
+            array (
+              'localizeChildrenAtParentLocalization' => true,
+            ),
+            'maxitems' => 99,
+          ),
+        ),
+        'crdate' => 
+        array (
+          'exclude' => 1,
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => '8',
+            'eval' => 'date',
+            'checkbox' => '0',
+            'default' => '0',
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_payment' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment',
+        'label' => 'name',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'name,value,calc,sum,',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Payment.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'service_country, service_id, name, provider, status, gross, net, tax, tax_class, note, transactions',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.palettes.service;service,name,provider,status,gross,net,tax,tax_class,note,transactions',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+        'service' => 
+        array (
+          'showitem' => 'service_country, service_id',
+          'canNotCollapse' => 0,
+        ),
+      ),
+      'columns' => 
+      array (
+        'service_country' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.service_country',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => '',
+          ),
+        ),
+        'service_id' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.service_id',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'int,required',
+          ),
+        ),
+        'name' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.name',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'provider' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.provider',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'status' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.status',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.status.open',
+                1 => 'open',
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.status.pending',
+                1 => 'pending',
+              ),
+              2 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.status.paid',
+                1 => 'paid',
+              ),
+              3 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.status.canceled',
+                1 => 'canceled',
+              ),
+            ),
+            'size' => 1,
+            'maxitems' => 1,
+            'eval' => 'required',
+          ),
+        ),
+        'gross' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.gross',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'net' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.net',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.tax',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax_class' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.tax_class',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_taxclass',
+            'minitems' => 1,
+            'maxitems' => 1,
+          ),
+        ),
+        'note' => 
+        array (
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_payment.note',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => '40',
+            'rows' => '15',
+          ),
+        ),
+        'transactions' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_item.transactions',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_transaction',
+            'foreign_field' => 'payment',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'item' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_product' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product',
+        'label' => 'title',
+        'label_alt' => 'sku',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'sku,title',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Product.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'product_type, sku, title, count, additional, additional_data, product_additional, price, discount, gross, net, tax, tax_class',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'product_type,sku,title,count,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.price.group;price,product_additional,additional,additional_data',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+        'price' => 
+        array (
+          'showitem' => 'price, discount, --linebreak--, gross, net, --linebreak--, tax, tax_class',
+          'canNotCollapse' => 1,
+        ),
+      ),
+      'columns' => 
+      array (
+        'product_type' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.product_type',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => '',
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.product_type.simple',
+                1 => 'simple',
+              ),
+              2 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.product_type.configurable',
+                1 => 'configurable',
+              ),
+              3 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.product_type.virtual',
+                1 => 'virtual',
+              ),
+              4 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.product_type.downloadable',
+                1 => 'downloadable',
+              ),
+            ),
+            'readOnly' => 1,
+            'size' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'sku' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.sku',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'count' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.count',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'int',
+          ),
+        ),
+        'price' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.price',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'discount' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.discount',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'gross' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.gross',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'net' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.net',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.tax',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax_class' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.tax_class',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_taxclass',
+            'minitems' => 1,
+            'maxitems' => 1,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'additional' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.additional',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'additional_data' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.additional_data',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'product_additional' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_product.product_additional',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_productadditional',
+            'foreign_field' => 'product',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'item' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_productadditional' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_productadditional',
+        'label' => 'additional_type',
+        'label_alt' => 'additional_key, additional_value',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'additional_type,additional_key,additional_value',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/ProductAdditional.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'additional_type, additional_key, additional_value, additional, additional_data',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'additional_type, additional_key, additional_value, additional, additional_data',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'additional_type' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_productadditional.additional_type',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'additional_key' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_productadditional.additional_key',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'additional_value' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_productadditional.additional_value',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'additional' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_productadditional.additional',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'additional_data' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_productadditional.additional_data',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => 48,
+            'rows' => 15,
+            'appearance' => 
+            array (
+              'enabledControls' => 
+              array (
+                'info' => false,
+                'new' => false,
+                'dragdrop' => false,
+                'sort' => false,
+                'hide' => false,
+                'delete' => false,
+                'localize' => false,
+              ),
+            ),
+          ),
+        ),
+        'product' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_shipping' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping',
+        'label' => 'name',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'name,value,calc,sum,',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Shipping.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'service_country, service_id, name, status, gross, net, tax, tax_class, note',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.palettes.service;service,name,status,gross,net,tax,tax_class,note',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+        'service' => 
+        array (
+          'showitem' => 'service_country, service_id',
+          'canNotCollapse' => 0,
+        ),
+      ),
+      'columns' => 
+      array (
+        'service_country' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.service_country',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => '',
+          ),
+        ),
+        'service_id' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.service_id',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'int,required',
+          ),
+        ),
+        'name' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.name',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'status' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.status',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.status.open',
+                1 => 'open',
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.status.on_hold',
+                1 => 'on_hold',
+              ),
+              2 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.status.in_process',
+                1 => 'in_process',
+              ),
+              3 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.status.shipped',
+                1 => 'shipped',
+              ),
+            ),
+            'size' => 1,
+            'maxitems' => 1,
+            'eval' => 'required',
+          ),
+        ),
+        'gross' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.gross',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'net' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.net',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.tax',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax_class' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.tax_class',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_taxclass',
+            'minitems' => 1,
+            'maxitems' => 1,
+          ),
+        ),
+        'note' => 
+        array (
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_shipping.note',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => '40',
+            'rows' => '15',
+          ),
+        ),
+        'item' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_tax' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_tax',
+        'label' => 'name',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => '',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Tax.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'tax, tax_class',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'tax, tax_class',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'tax' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_tax.tax',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax_class' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_tax.tax_class',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_order_taxclass',
+            'minitems' => 1,
+            'maxitems' => 1,
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_taxclass' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_taxclass',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'title,value,calc',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/TaxClass.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'title, value, calc',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'title, value, calc',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'title' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_taxclass.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'value' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_taxclass.value',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'calc' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_taxclass.calc',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'item' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_order_transaction' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction',
+        'label' => 'txn_id',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+        ),
+        'searchFields' => 'txn_id',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Order/Transaction.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'txn_id, status, external_status_code, note',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'txn_id, status, external_status_code, note',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'txn_id' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.txn_id',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'txn_txt' => 
+        array (
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.txn_txt',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => '40',
+            'rows' => '15',
+          ),
+        ),
+        'status' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.status',
+          'config' => 
+          array (
+            'type' => 'select',
+            'readOnly' => 1,
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.status.unknown',
+                1 => 'unknown',
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.status.invalid',
+                1 => 'invalid',
+              ),
+              2 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.status.open',
+                1 => 'open',
+              ),
+              3 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.status.pending',
+                1 => 'pending',
+              ),
+              4 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.status.paid',
+                1 => 'paid',
+              ),
+              5 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.status.canceled',
+                1 => 'canceled',
+              ),
+            ),
+            'size' => 1,
+            'maxitems' => 1,
+            'eval' => 'required',
+          ),
+        ),
+        'external_status_code' => 
+        array (
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.external_status_code',
+          'config' => 
+          array (
+            'type' => 'input',
+            'readOnly' => 1,
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'note' => 
+        array (
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_order_transaction.note',
+          'config' => 
+          array (
+            'type' => 'text',
+            'readOnly' => 1,
+            'cols' => '40',
+            'rows' => '15',
+          ),
+        ),
+        'payment' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_bevariant' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant',
+        'label' => 'be_variant_attribute_option1',
+        'label_alt' => 'be_variant_attribute_option2,be_variant_attribute_option3',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/BeVariant.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, be_variant_attribute_option1, be_variant_attribute_option2, be_variant_attribute_option3, stock',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,--palette--;;1,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.palette.variants;variants,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.prices,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.palette.prices;prices,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.palette.measure;measure,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.stock,stock,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime,endtime',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+        'variants' => 
+        array (
+          'showitem' => 'be_variant_attribute_option1, be_variant_attribute_option2, be_variant_attribute_option3',
+          'canNotCollapse' => 1,
+        ),
+        'prices' => 
+        array (
+          'showitem' => 'price, price_calc_method, --linebreak--, special_prices',
+          'canNotCollapse' => 1,
+        ),
+        'measure' => 
+        array (
+          'showitem' => 'price_measure, price_measure_unit',
+          'canNotCollapse' => 1,
+        ),
+      ),
+      'columns' => 
+      array (
+        'sys_language_uid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'foreign_table' => 'sys_language',
+            'foreign_table_where' => 'ORDER BY sys_language.title',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                1 => -1,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.default_value',
+                1 => 0,
+              ),
+            ),
+          ),
+        ),
+        'l10n_parent' => 
+        array (
+          'displayCond' => 'FIELD:sys_language_uid:>:0',
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariant',
+            'foreign_table_where' => 'AND tx_cart_domain_model_product_bevariant.pid=###CURRENT_PID### AND tx_cart_domain_model_product_bevariant.sys_language_uid IN (-1,0)',
+          ),
+        ),
+        'l10n_diffsource' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        't3ver_label' => 
+        array (
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'max' => 255,
+          ),
+        ),
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'starttime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'endtime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'be_variant_attribute_option1' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.be_variant_attribute_option1',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattributeoption',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariantattributeoption.pid=###CURRENT_PID### AND tx_cart_domain_model_product_bevariantattributeoption.be_variant_attribute IN ((SELECT tx_cart_domain_model_product_product.be_variant_attribute1 FROM tx_cart_domain_model_product_product WHERE tx_cart_domain_model_product_product.uid=###REC_FIELD_product###))  ORDER BY tx_cart_domain_model_product_bevariantattributeoption.title ',
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'be_variant_attribute_option2' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.be_variant_attribute_option2',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattributeoption',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariantattributeoption.pid=###CURRENT_PID### AND tx_cart_domain_model_product_bevariantattributeoption.be_variant_attribute IN ((SELECT tx_cart_domain_model_product_product.be_variant_attribute2 FROM tx_cart_domain_model_product_product WHERE tx_cart_domain_model_product_product.uid=###REC_FIELD_product###))  ORDER BY tx_cart_domain_model_product_bevariantattributeoption.title ',
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'be_variant_attribute_option3' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.be_variant_attribute_option3',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattributeoption',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariantattributeoption.pid=###CURRENT_PID### AND tx_cart_domain_model_product_bevariantattributeoption.be_variant_attribute IN ((SELECT tx_cart_domain_model_product_product.be_variant_attribute3 FROM tx_cart_domain_model_product_product WHERE tx_cart_domain_model_product_product.uid=###REC_FIELD_product###))  ORDER BY tx_cart_domain_model_product_bevariantattributeoption.title ',
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'price' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.price',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,double2',
+            'default' => '0.00',
+          ),
+        ),
+        'price_calc_method' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.price_calc_method',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.price_calc_method.0',
+                1 => 0,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.price_calc_method.1',
+                1 => 1,
+              ),
+              2 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.price_calc_method.2',
+                1 => 2,
+              ),
+              3 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.price_calc_method.3',
+                1 => 3,
+              ),
+              4 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.price_calc_method.4',
+                1 => 4,
+              ),
+              5 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.price_calc_method.5',
+                1 => 5,
+              ),
+            ),
+            'size' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'special_prices' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.special_prices',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'tx_cart_domain_model_product_specialprice',
+            'foreign_field' => 'be_variant',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_specialprice.pid=###CURRENT_PID### ORDER BY tx_cart_domain_model_product_specialprice.title ',
+            'maxitems' => 99,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+            ),
+          ),
+        ),
+        'price_measure' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.price_measure',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'price_measure_unit' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.price_measure_unit',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.no_measuring_unit',
+                1 => 0,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.weight',
+                1 => '--div--',
+              ),
+              2 => 
+              array (
+                0 => 'mg',
+                1 => 'mg',
+              ),
+              3 => 
+              array (
+                0 => 'g',
+                1 => 'g',
+              ),
+              4 => 
+              array (
+                0 => 'kg',
+                1 => 'kg',
+              ),
+              5 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.volume',
+                1 => '--div--',
+              ),
+              6 => 
+              array (
+                0 => 'ml',
+                1 => 'ml',
+              ),
+              7 => 
+              array (
+                0 => 'cl',
+                1 => 'cl',
+              ),
+              8 => 
+              array (
+                0 => 'l',
+                1 => 'l',
+              ),
+              9 => 
+              array (
+                0 => 'cbm',
+                1 => 'cbm',
+              ),
+              10 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.length',
+                1 => '--div--',
+              ),
+              11 => 
+              array (
+                0 => 'cm',
+                1 => 'cm',
+              ),
+              12 => 
+              array (
+                0 => 'm',
+                1 => 'm',
+              ),
+              13 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.area',
+              ),
+              14 => 
+              array (
+                0 => 'm²',
+                1 => 'm2',
+              ),
+            ),
+            'size' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'stock' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariant.stock',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,int',
+            'default' => 0,
+          ),
+        ),
+        'product' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_bevariantattribute' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattribute',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title,value,calc,',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/BeVariantAttribute.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, sku, title, description, be_variant_attribute_options',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,--palette--;;1,sku,title,description,be_variant_attribute_options',
+          'columnsOverrides' => 
+          array (
+            'description' => 
+            array (
+              'config' => 
+              array (
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'sys_language_uid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'foreign_table' => 'sys_language',
+            'foreign_table_where' => 'ORDER BY sys_language.title',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                1 => -1,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.default_value',
+                1 => 0,
+              ),
+            ),
+          ),
+        ),
+        'l10n_parent' => 
+        array (
+          'displayCond' => 'FIELD:sys_language_uid:>:0',
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattribute',
+            'foreign_table_where' => 'AND tx_cart_domain_model_product_bevariantattribute.pid=###CURRENT_PID### AND tx_cart_domain_model_product_bevariantattribute.sys_language_uid IN (-1,0)',
+          ),
+        ),
+        'l10n_diffsource' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        't3ver_label' => 
+        array (
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'max' => 255,
+          ),
+        ),
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'starttime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'endtime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'sku' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattribute.sku',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattribute.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'description' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattribute.description',
+          'config' => 
+          array (
+            'type' => 'text',
+            'cols' => 40,
+            'rows' => 15,
+            'eval' => 'trim',
+            'enableRichtext' => true,
+            'richtextConfiguration' => 'default',
+          ),
+        ),
+        'be_variant_attribute_options' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattribute.be_variant_attribute_options',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'readOnly' => 1,
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattributeoption',
+            'foreign_field' => 'be_variant_attribute',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariantattributeoption.pid=###CURRENT_PID### ORDER BY tx_cart_domain_model_product_bevariantattributeoption.title ',
+            'foreign_sortby' => 'sorting',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => true,
+                'dragdrop' => false,
+                'sort' => true,
+                'hide' => false,
+                'delete' => true,
+                'localize' => true,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_bevariantattributeoption' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattributeoption',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title,',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/BeVariantAttributeOption.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, sku, title, description',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,--palette--;;1,sku,title,description',
+          'columnsOverrides' => 
+          array (
+            'description' => 
+            array (
+              'config' => 
+              array (
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'sys_language_uid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'foreign_table' => 'sys_language',
+            'foreign_table_where' => 'ORDER BY sys_language.title',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                1 => -1,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.default_value',
+                1 => 0,
+              ),
+            ),
+          ),
+        ),
+        'l10n_parent' => 
+        array (
+          'displayCond' => 'FIELD:sys_language_uid:>:0',
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattributeoption',
+            'foreign_table_where' => 'AND tx_cart_domain_model_product_bevariantattributeoption.pid=###CURRENT_PID### AND tx_cart_domain_model_product_bevariantattributeoption.sys_language_uid IN (-1,0)',
+          ),
+        ),
+        'l10n_diffsource' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        't3ver_label' => 
+        array (
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'max' => 255,
+          ),
+        ),
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'starttime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'endtime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'sku' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattributeoption.sku',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattributeoption.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'description' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_bevariantattributeoption.description',
+          'config' => 
+          array (
+            'type' => 'text',
+            'cols' => 40,
+            'rows' => 15,
+            'eval' => 'trim',
+            'enableRichtext' => true,
+            'richtextConfiguration' => 'default',
+          ),
+        ),
+        'be_variant' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_coupon' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon',
+        'label' => 'code',
+        'label_alt' => 'title',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/Coupon.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'hidden, starttime, endtime, title, code, coupon_type, discount, tax_class_id, cart_min_price, is_combinable, handle_available, number_available, number_used',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'hidden,--palette--;;1,starttime,endtime,title,code,coupon_type,discount,tax_class_id,cart_min_price,is_combinable,handle_available,number_available,number_used',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'starttime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'endtime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'code' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.code',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+        'coupon_type' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.coupon_type',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.coupon_type.cartdiscount',
+                1 => 'cartdiscount',
+              ),
+            ),
+            'default' => 'simple',
+            'size' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'discount' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.discount',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'tax_class_id' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.tax_class_id',
+          'config' => 
+          array (
+            'type' => 'select',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.tax_class_id.1',
+                1 => 1,
+              ),
+            ),
+            'size' => 1,
+            'minitems' => 1,
+            'maxitems' => 1,
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'cart_min_price' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.cart_min_price',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2',
+          ),
+        ),
+        'is_combinable' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.is_combinable',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'is_relative_discount' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.is_relative_discount',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'handle_available' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.handle_available',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'number_available' => 
+        array (
+          'exclude' => 0,
+          'displayCond' => 'FIELD:handle_available:REQ:TRUE',
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.number_available',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'int',
+            'default' => '0',
+          ),
+        ),
+        'number_used' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_coupon.number_used',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'int',
+            'default' => '0',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_fevariant' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_fevariant',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/FeVariant.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'hidden, is_required, sku, title',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'hidden,--palette--;;1,is_required,sku,title,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'is_required' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_fevariant.is_required',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'sku' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_fevariant.sku',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_fevariant.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'product' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_product' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product',
+        'label' => 'sku',
+        'label_alt' => 'title',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'sortby' => 'sorting',
+        'versioningWS' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+        ),
+        'searchFields' => 'sku,title,teaser,description,price,',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/Product.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, product_type, sku, title, header_image, teaser, description, min_number_in_order, max_number_in_order, price, special_prices, quantity_discounts, price_measure, price_measure_unit, base_price_measure_unit, service_attribute1, service_attribute2, service_attribute3, tax_class_id, be_variant_attribute1, be_variant_attribute2, be_variant_attribute3, fe_variants, be_variants, related_products, main_category, categories, tags,main_category,categories',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,--palette--;;1,starttime,endtime,product_type,sku,title,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.descriptions,teaser,description,product_content,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.images_and_files,header_image,images,files,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.prices,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.palette.minmax;minmax,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.palette.prices;prices,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.measures,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.palette.measures;measures,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.palette.service_attributes;service_attributes,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.stock,handle_stock,handle_stock_in_variants,stock,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.variants,fe_variants,--palette--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.palette.be_variant_attributes;be_variant_attributes,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.related_products,related_products,--div--;LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.div.tags_categories,tags,main_category,categories,--div--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_category.tabs.category',
+          'columnsOverrides' => 
+          array (
+            'teaser' => 
+            array (
+              'config' => 
+              array (
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
+              ),
+            ),
+            'description' => 
+            array (
+              'config' => 
+              array (
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+        'be_variant_attributes' => 
+        array (
+          'showitem' => 'be_variant_attribute1, be_variant_attribute2, be_variant_attribute3, --linebreak--, be_variants',
+          'canNotCollapse' => 1,
+        ),
+        'minmax' => 
+        array (
+          'showitem' => 'min_number_in_order, max_number_in_order',
+          'canNotCollapse' => 1,
+        ),
+        'prices' => 
+        array (
+          'showitem' => 'is_net_price, --linebreak--, price, tax_class_id, --linebreak--, special_prices, quantity_discounts',
+          'canNotCollapse' => 1,
+        ),
+        'measures' => 
+        array (
+          'showitem' => 'price_measure, price_measure_unit, base_price_measure_unit',
+          'canNotCollapse' => 1,
+        ),
+        'service_attributes' => 
+        array (
+          'showitem' => 'service_attribute1, service_attribute2, service_attribute3',
+          'canNotCollapse' => 1,
+        ),
+      ),
+      'columns' => 
+      array (
+        'sys_language_uid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'foreign_table' => 'sys_language',
+            'foreign_table_where' => 'ORDER BY sys_language.title',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                1 => -1,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.default_value',
+                1 => 0,
+              ),
+            ),
+          ),
+        ),
+        'l10n_parent' => 
+        array (
+          'displayCond' => 'FIELD:sys_language_uid:>:0',
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_product',
+            'foreign_table_where' => 'AND tx_cart_domain_model_product_product.pid=###CURRENT_PID### AND tx_cart_domain_model_product_product.sys_language_uid IN (-1,0)',
+          ),
+        ),
+        'l10n_diffsource' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        't3ver_label' => 
+        array (
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'max' => 255,
+          ),
+        ),
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'starttime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'endtime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'range' => 
+            array (
+              'lower' => 1533679200,
+            ),
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'product_type' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.product_type',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.product_type.simple',
+                1 => 'simple',
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.product_type.configurable',
+                1 => 'configurable',
+              ),
+              2 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.product_type.virtual',
+                1 => 'virtual',
+              ),
+              3 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.product_type.downloadable',
+                1 => 'downloadable',
+              ),
+            ),
+            'default' => 'simple',
+            'size' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+          'onChange' => 'reload',
+        ),
+        'sku' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.sku',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,trim',
+          ),
+        ),
+        'teaser' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.teaser',
+          'config' => 
+          array (
+            'type' => 'text',
+            'cols' => 40,
+            'rows' => 15,
+            'eval' => 'trim',
+            'enableRichtext' => true,
+            'richtextConfiguration' => 'default',
+          ),
+        ),
+        'description' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.description',
+          'config' => 
+          array (
+            'type' => 'text',
+            'cols' => 40,
+            'rows' => 15,
+            'eval' => 'trim',
+            'enableRichtext' => true,
+            'richtextConfiguration' => 'default',
+          ),
+        ),
+        'min_number_in_order' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.min_number_in_order',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'int',
+          ),
+        ),
+        'max_number_in_order' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.max_number_in_order',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'int',
+          ),
+        ),
+        'is_net_price' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.is_net_price',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'price' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.price',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,double2',
+            'default' => '0.00',
+          ),
+        ),
+        'special_prices' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.special_prices',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'tx_cart_domain_model_product_specialprice',
+            'foreign_field' => 'product',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_specialprice.pid=###CURRENT_PID### ',
+            'foreign_default_sortby' => 'price ASC',
+            'maxitems' => 99,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+            ),
+          ),
+        ),
+        'quantity_discounts' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.quantity_discounts',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'tx_cart_domain_model_product_quantitydiscount',
+            'foreign_field' => 'product',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_quantitydiscount.pid=###CURRENT_PID### ',
+            'foreign_default_sortby' => 'quantity ASC',
+            'maxitems' => 99,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+            ),
+          ),
+        ),
+        'price_measure' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.price_measure',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2',
+            'default' => '0.00',
+          ),
+        ),
+        'price_measure_unit' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.price_measure_unit',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.no_measuring_unit',
+                1 => 0,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.weight',
+                1 => '--div--',
+              ),
+              2 => 
+              array (
+                0 => 'mg',
+                1 => 'mg',
+              ),
+              3 => 
+              array (
+                0 => 'g',
+                1 => 'g',
+              ),
+              4 => 
+              array (
+                0 => 'kg',
+                1 => 'kg',
+              ),
+              5 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.volume',
+                1 => '--div--',
+              ),
+              6 => 
+              array (
+                0 => 'ml',
+                1 => 'ml',
+              ),
+              7 => 
+              array (
+                0 => 'cl',
+                1 => 'cl',
+              ),
+              8 => 
+              array (
+                0 => 'l',
+                1 => 'l',
+              ),
+              9 => 
+              array (
+                0 => 'cbm',
+                1 => 'cbm',
+              ),
+              10 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.length',
+                1 => '--div--',
+              ),
+              11 => 
+              array (
+                0 => 'cm',
+                1 => 'cm',
+              ),
+              12 => 
+              array (
+                0 => 'm',
+                1 => 'm',
+              ),
+              13 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.area',
+                1 => '--div--',
+              ),
+              14 => 
+              array (
+                0 => 'm²',
+                1 => 'm2',
+              ),
+            ),
+            'size' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'base_price_measure_unit' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.base_price_measure_unit',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.no_measuring_unit',
+                1 => 0,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.weight',
+                1 => '--div--',
+              ),
+              2 => 
+              array (
+                0 => 'mg',
+                1 => 'mg',
+              ),
+              3 => 
+              array (
+                0 => 'g',
+                1 => 'g',
+              ),
+              4 => 
+              array (
+                0 => 'kg',
+                1 => 'kg',
+              ),
+              5 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.volume',
+                1 => '--div--',
+              ),
+              6 => 
+              array (
+                0 => 'ml',
+                1 => 'ml',
+              ),
+              7 => 
+              array (
+                0 => 'cl',
+                1 => 'cl',
+              ),
+              8 => 
+              array (
+                0 => 'l',
+                1 => 'l',
+              ),
+              9 => 
+              array (
+                0 => 'cbm',
+                1 => 'cbm',
+              ),
+              10 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.length',
+                1 => '--div--',
+              ),
+              11 => 
+              array (
+                0 => 'cm',
+                1 => 'cm',
+              ),
+              12 => 
+              array (
+                0 => 'm',
+                1 => 'm',
+              ),
+              13 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.measure.area',
+                1 => '--div--',
+              ),
+              14 => 
+              array (
+                0 => 'm²',
+                1 => 'm2',
+              ),
+            ),
+            'size' => 1,
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+        ),
+        'service_attribute1' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.service_attribute1',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2,required',
+            'default' => '0.00',
+          ),
+        ),
+        'service_attribute2' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.service_attribute2',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2,required',
+            'default' => '0.00',
+          ),
+        ),
+        'service_attribute3' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.service_attribute3',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'double2,required',
+            'default' => '0.00',
+          ),
+        ),
+        'tax_class_id' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.tax_class_id',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.tax_class_id.1',
+                1 => 1,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.tax_class_id.2',
+                1 => 2,
+              ),
+              2 => 
+              array (
+                0 => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.tax_class_id.3',
+                1 => 3,
+              ),
+            ),
+            'size' => 1,
+            'minitems' => 1,
+            'maxitems' => 1,
+          ),
+        ),
+        'be_variant_attribute1' => 
+        array (
+          'exclude' => 1,
+          'displayCond' => 'FIELD:product_type:=:configurable',
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.be_variant_attribute1',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattribute',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariantattribute.pid=###CURRENT_PID### ORDER BY tx_cart_domain_model_product_bevariantattribute.title ',
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+          'onChange' => 'reload',
+        ),
+        'be_variant_attribute2' => 
+        array (
+          'exclude' => 1,
+          'displayCond' => 'FIELD:product_type:=:configurable',
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.be_variant_attribute2',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattribute',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariantattribute.pid=###CURRENT_PID### ORDER BY tx_cart_domain_model_product_bevariantattribute.title ',
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+          'onChange' => 'reload',
+        ),
+        'be_variant_attribute3' => 
+        array (
+          'exclude' => 1,
+          'displayCond' => 'FIELD:product_type:=:configurable',
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.be_variant_attribute3',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_bevariantattribute',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariantattribute.pid=###CURRENT_PID### ORDER BY tx_cart_domain_model_product_bevariantattribute.title ',
+            'minitems' => 0,
+            'maxitems' => 1,
+          ),
+          'onChange' => 'reload',
+        ),
+        'fe_variants' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.fe_variants',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'tx_cart_domain_model_product_fevariant',
+            'foreign_field' => 'product',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_fevariant.pid=###CURRENT_PID### ORDER BY tx_cart_domain_model_product_fevariant.title ',
+            'foreign_sortby' => 'sorting',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => true,
+                'dragdrop' => false,
+                'sort' => true,
+                'hide' => true,
+                'delete' => true,
+                'localize' => true,
+              ),
+            ),
+          ),
+        ),
+        'be_variants' => 
+        array (
+          'exclude' => 1,
+          'displayCond' => 'FIELD:product_type:=:configurable',
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.be_variants',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'tx_cart_domain_model_product_bevariant',
+            'foreign_field' => 'product',
+            'foreign_table_where' => ' AND tx_cart_domain_model_product_bevariant.pid=###CURRENT_PID### ORDER BY tx_cart_domain_model_product_bevariant.title ',
+            'foreign_sortby' => 'sorting',
+            'maxitems' => 9999,
+            'appearance' => 
+            array (
+              'collapseAll' => 1,
+              'levelLinksPosition' => 'top',
+              'showSynchronizationLink' => 1,
+              'showPossibleLocalizationRecords' => 1,
+              'showAllLocalizationLink' => 1,
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => true,
+                'dragdrop' => false,
+                'sort' => true,
+                'hide' => true,
+                'delete' => true,
+                'localize' => true,
+              ),
+            ),
+          ),
+        ),
+        'related_products' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlftx_cart_domain_model_product_product.related_products',
+          'config' => 
+          array (
+            'type' => 'group',
+            'internal_type' => 'db',
+            'allowed' => 'tx_cart_domain_model_product_product',
+            'foreign_table' => 'tx_cart_domain_model_product_product',
+            'MM_opposite_field' => 'related_products_from',
+            'size' => 5,
+            'minitems' => 0,
+            'maxitems' => 100,
+            'MM' => 'tx_cart_domain_model_product_product_related_mm',
+            'suggestOptions' => 
+            array (
+              'default' => 
+              array (
+                'searchWholePhrase' => true,
+              ),
+            ),
+          ),
+        ),
+        'related_products_from' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlftx_cart_domain_model_product_product.related_products_from',
+          'config' => 
+          array (
+            'type' => 'group',
+            'internal_type' => 'db',
+            'foreign_table' => 'tx_cart_domain_model_product_product',
+            'allowed' => 'tx_cart_domain_model_product_product',
+            'size' => 5,
+            'maxitems' => 100,
+            'MM' => 'tx_cart_domain_model_product_product_related_mm',
+            'readOnly' => 1,
+          ),
+        ),
+        'images' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.images',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'sys_file_reference',
+            'foreign_field' => 'uid_foreign',
+            'foreign_sortby' => 'sorting_foreign',
+            'foreign_table_field' => 'tablenames',
+            'foreign_match_fields' => 
+            array (
+              'fieldname' => 'image',
+              'tablenames' => 'tx_cart_domain_model_product_product',
+              'table_local' => 'sys_file',
+            ),
+            'foreign_label' => 'uid_local',
+            'foreign_selector' => 'uid_local',
+            'overrideChildTca' => 
+            array (
+              'columns' => 
+              array (
+                'uid_local' => 
+                array (
+                  'config' => 
+                  array (
+                    'appearance' => 
+                    array (
+                      'elementBrowserType' => 'file',
+                      'elementBrowserAllowed' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'filter' => 
+            array (
+              0 => 
+              array (
+                'userFunc' => 'TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren',
+                'parameters' => 
+                array (
+                  'allowedFileExtensions' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg',
+                  'disallowedFileExtensions' => '',
+                ),
+              ),
+            ),
+            'appearance' => 
+            array (
+              'useSortable' => true,
+              'headerThumbnail' => 
+              array (
+                'field' => 'uid_local',
+                'width' => '45',
+                'height' => '45c',
+              ),
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => false,
+                'dragdrop' => true,
+                'sort' => false,
+                'hide' => true,
+                'delete' => true,
+              ),
+              'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference',
+              'showPossibleLocalizationRecords' => true,
+              'showRemovedLocalizationRecords' => true,
+              'showAllLocalizationLink' => true,
+              'showSynchronizationLink' => true,
+            ),
+            'behaviour' => 
+            array (
+              'localizeChildrenAtParentLocalization' => true,
+              'allowLanguageSynchronization' => true,
+            ),
+            'foreign_types' => 
+            array (
+              0 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              1 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              2 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              3 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              4 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              5 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+            ),
+            'minitems' => 0,
+            'maxitems' => 99,
+          ),
+        ),
+        'files' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.files',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'sys_file_reference',
+            'foreign_field' => 'uid_foreign',
+            'foreign_sortby' => 'sorting_foreign',
+            'foreign_table_field' => 'tablenames',
+            'foreign_match_fields' => 
+            array (
+              'fieldname' => 'files',
+              'tablenames' => 'tx_cart_domain_model_product_product',
+              'table_local' => 'sys_file',
+            ),
+            'foreign_label' => 'uid_local',
+            'foreign_selector' => 'uid_local',
+            'overrideChildTca' => 
+            array (
+              'columns' => 
+              array (
+                'uid_local' => 
+                array (
+                  'config' => 
+                  array (
+                    'appearance' => 
+                    array (
+                      'elementBrowserType' => 'file',
+                      'elementBrowserAllowed' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg, pdf',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'filter' => 
+            array (
+              0 => 
+              array (
+                'userFunc' => 'TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren',
+                'parameters' => 
+                array (
+                  'allowedFileExtensions' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg, pdf',
+                  'disallowedFileExtensions' => '',
+                ),
+              ),
+            ),
+            'appearance' => 
+            array (
+              'useSortable' => true,
+              'headerThumbnail' => 
+              array (
+                'field' => 'uid_local',
+                'width' => '45',
+                'height' => '45c',
+              ),
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => false,
+                'dragdrop' => true,
+                'sort' => false,
+                'hide' => true,
+                'delete' => true,
+              ),
+              'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference',
+              'showPossibleLocalizationRecords' => true,
+              'showRemovedLocalizationRecords' => true,
+              'showAllLocalizationLink' => true,
+              'showSynchronizationLink' => true,
+            ),
+            'behaviour' => 
+            array (
+              'localizeChildrenAtParentLocalization' => true,
+              'allowLanguageSynchronization' => true,
+            ),
+            'foreign_types' => 
+            array (
+              0 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              1 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              2 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              3 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              4 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+              5 => 
+              array (
+                'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette',
+              ),
+            ),
+            'minitems' => 0,
+            'maxitems' => 99,
+          ),
+        ),
+        'product_content' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.product_content',
+          'config' => 
+          array (
+            'type' => 'inline',
+            'foreign_table' => 'tt_content',
+            'foreign_field' => 'tx_cart_domain_model_product_product',
+            'foreign_sortby' => 'sorting',
+            'minitems' => 0,
+            'maxitems' => 99,
+            'appearance' => 
+            array (
+              'levelLinksPosition' => 'top',
+              'showPossibleLocalizationRecords' => true,
+              'showRemovedLocalizationRecords' => true,
+              'showAllLocalizationLink' => true,
+              'showSynchronizationLink' => true,
+              'enabledControls' => 
+              array (
+                'info' => true,
+                'new' => true,
+                'dragdrop' => false,
+                'sort' => true,
+                'hide' => true,
+                'delete' => true,
+                'localize' => true,
+              ),
+            ),
+            'inline' => 
+            array (
+              'inlineNewButtonStyle' => 'display: inline-block;',
+            ),
+            'behaviour' => 
+            array (
+              'localizationMode' => 'select',
+              'localizeChildrenAtParentLocalization' => true,
+            ),
+          ),
+        ),
+        'handle_stock' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.handle_stock',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+          'onChange' => 'reload',
+        ),
+        'handle_stock_in_variants' => 
+        array (
+          'exclude' => 1,
+          'displayCond' => 
+          array (
+            'AND' => 
+            array (
+              0 => 'FIELD:product_type:=:configurable',
+              1 => 'FIELD:handle_stock:=:1',
+            ),
+          ),
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.handle_stock_in_variants',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+          'onChange' => 'reload',
+        ),
+        'stock' => 
+        array (
+          'exclude' => 1,
+          'displayCond' => 
+          array (
+            'AND' => 
+            array (
+              0 => 'FIELD:handle_stock:=:1',
+              1 => 'FIELD:handle_stock_in_variants:=:0',
+            ),
+          ),
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.stock',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'int',
+            'default' => 0,
+          ),
+        ),
+        'tags' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlftx_cart_domain_model_product_product.tags',
+          'config' => 
+          array (
+            'type' => 'group',
+            'internal_type' => 'db',
+            'allowed' => 'tx_cart_domain_model_product_tag',
+            'foreign_table' => 'tx_cart_domain_model_product_tag',
+            'size' => 5,
+            'minitems' => 0,
+            'maxitems' => 100,
+            'MM' => 'tx_cart_domain_model_product_tag_mm',
+            'suggestOptions' => 
+            array (
+              'default' => 
+              array (
+                'searchWholePhrase' => true,
+              ),
+            ),
+          ),
+        ),
+        'main_category' => 
+        array (
+          'exclude' => true,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.main_category',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectTree',
+            'foreign_table' => 'sys_category',
+            'foreign_table_where' => ' AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC',
+            'MM' => 'sys_category_record_mm',
+            'MM_opposite_field' => 'items',
+            'MM_match_fields' => 
+            array (
+              'tablenames' => 'tx_cart_domain_model_product_product',
+              'fieldname' => 'main_category',
+            ),
+            'size' => 20,
+            'maxitems' => 1,
+            'treeConfig' => 
+            array (
+              'parentField' => 'parent',
+              'appearance' => 
+              array (
+                'expandAll' => true,
+                'showHeader' => true,
+                'maxLevels' => 99,
+              ),
+            ),
+            'minitems' => 0,
+            'multiple' => false,
+          ),
+        ),
+        'categories' => 
+        array (
+          'exclude' => true,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.categories',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectTree',
+            'foreign_table' => 'sys_category',
+            'foreign_table_where' => ' AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC',
+            'MM' => 'sys_category_record_mm',
+            'MM_opposite_field' => 'items',
+            'MM_match_fields' => 
+            array (
+              'tablenames' => 'tx_cart_domain_model_product_product',
+              'fieldname' => 'categories',
+            ),
+            'size' => 20,
+            'maxitems' => 9999,
+            'treeConfig' => 
+            array (
+              'parentField' => 'parent',
+              'appearance' => 
+              array (
+                'expandAll' => true,
+                'showHeader' => true,
+                'maxLevels' => 99,
+              ),
+            ),
+          ),
+        ),
+      ),
+      'main_category' => 
+      array (
+        'config' => 
+        array (
+          'maxitems' => 1,
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_quantitydiscount' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_quantitydiscount',
+        'label' => 'quantity',
+        'label_alt' => 'price',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'fe_group' => 'frontend_user_group',
+        ),
+        'searchFields' => 'price',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/QuantityDiscount.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'hidden, frontend_user_group, quantity, price',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'hidden,--palette--;;1,frontend_user_group,quantity,price',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        't3ver_label' => 
+        array (
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'max' => 255,
+          ),
+        ),
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'quantity' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_quantitydiscount.quantity',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,int',
+            'default' => '0',
+          ),
+        ),
+        'price' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_quantitydiscount.price',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,double2',
+            'default' => '0.00',
+          ),
+        ),
+        'frontend_user_group' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_quantitydiscount.frontend_user_group',
+          'config' => 
+          array (
+            'type' => 'select',
+            'readOnly' => 0,
+            'foreign_table' => 'fe_groups',
+            'size' => 1,
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'minitems' => 0,
+            'maxitems' => 1,
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'product' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_specialprice' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_specialprice',
+        'label' => 'price',
+        'label_alt' => 'starttime, endtime',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'hideTable' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+          'fe_group' => 'frontend_user_group',
+        ),
+        'searchFields' => 'price',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/SpecialPrice.png',
+      ),
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'hidden, starttime, endtime, title, frontend_user_group, price',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'hidden,--palette--;;1,starttime,endtime,frontend_user_group,title,price',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'sys_language_uid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+          'config' => 
+          array (
+            'type' => 'select',
+            'foreign_table' => 'sys_language',
+            'foreign_table_where' => 'ORDER BY sys_language.title',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                1 => -1,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.default_value',
+                1 => 0,
+              ),
+            ),
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'l10n_parent' => 
+        array (
+          'displayCond' => 'FIELD:sys_language_uid:>:0',
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+          'config' => 
+          array (
+            'type' => 'select',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_specialprice',
+            'foreign_table_where' => 'AND tx_cart_domain_model_product_specialprice.pid=###CURRENT_PID### AND tx_cart_domain_model_product_specialprice.sys_language_uid IN (-1,0)',
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'l10n_diffsource' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        't3ver_label' => 
+        array (
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'max' => 255,
+          ),
+        ),
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'starttime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'endtime' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 13,
+            'eval' => 'datetime',
+            'checkbox' => 0,
+            'default' => 0,
+            'behaviour' => 
+            array (
+              'allowLanguageSynchronization' => true,
+            ),
+            'renderType' => 'inputDateTime',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_specialprice.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'trim',
+          ),
+        ),
+        'price' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_specialprice.price',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'required,double2',
+            'default' => '0.00',
+          ),
+        ),
+        'frontend_user_group' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_specialprice.frontend_user_group',
+          'config' => 
+          array (
+            'type' => 'select',
+            'readOnly' => 0,
+            'foreign_table' => 'fe_groups',
+            'size' => 1,
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'minitems' => 0,
+            'maxitems' => 1,
+            'renderType' => 'selectSingle',
+          ),
+        ),
+        'product' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+      ),
+    ),
+    'tx_cart_domain_model_product_tag' => 
+    array (
+      'ctrl' => 
+      array (
+        'title' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_tag',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'versioningWS' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'enablecolumns' => 
+        array (
+          'disabled' => 'hidden',
+          'starttime' => 'starttime',
+          'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title',
+        'iconfile' => 'EXT:cart/Resources/Public/Icons/Product/Tag.png',
+      ),
+      'hideTable' => 1,
+      'interface' => 
+      array (
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title',
+      ),
+      'types' => 
+      array (
+        1 => 
+        array (
+          'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,--palette--;;1,title',
+        ),
+      ),
+      'palettes' => 
+      array (
+        1 => 
+        array (
+          'showitem' => '',
+        ),
+      ),
+      'columns' => 
+      array (
+        'sys_language_uid' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'foreign_table' => 'sys_language',
+            'foreign_table_where' => 'ORDER BY sys_language.title',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                1 => -1,
+              ),
+              1 => 
+              array (
+                0 => 'LLL:EXT:lang/locallang_general.xlf:LGL.default_value',
+                1 => 0,
+              ),
+            ),
+          ),
+        ),
+        'l10n_parent' => 
+        array (
+          'displayCond' => 'FIELD:sys_language_uid:>:0',
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+          'config' => 
+          array (
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => 
+            array (
+              0 => 
+              array (
+                0 => '',
+                1 => 0,
+              ),
+            ),
+            'foreign_table' => 'tx_cart_domain_model_product_tag',
+            'foreign_table_where' => 'AND tx_cart_domain_model_product_tag.pid=###CURRENT_PID### AND tx_cart_domain_model_product_tag.sys_language_uid IN (-1,0)',
+          ),
+        ),
+        'l10n_diffsource' => 
+        array (
+          'config' => 
+          array (
+            'type' => 'passthrough',
+          ),
+        ),
+        't3ver_label' => 
+        array (
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'max' => 255,
+          ),
+        ),
+        'hidden' => 
+        array (
+          'exclude' => 1,
+          'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+          'config' => 
+          array (
+            'type' => 'check',
+          ),
+        ),
+        'title' => 
+        array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_tag.title',
+          'config' => 
+          array (
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'trim,required',
+          ),
+        ),
+      ),
+    ),
   ),
-  'categoryRegistry' => 'O:40:"TYPO3\\CMS\\Core\\Category\\CategoryRegistry":4:{s:11:"' . "\0" . '*' . "\0" . 'registry";a:3:{s:5:"pages";a:1:{s:10:"categories";a:1:{s:8:"position";s:18:"replace:categories";}}s:17:"sys_file_metadata";a:1:{s:10:"categories";a:1:{s:8:"position";s:18:"replace:categories";}}s:10:"tt_content";a:1:{s:10:"categories";a:1:{s:8:"position";s:18:"replace:categories";}}}s:13:"' . "\0" . '*' . "\0" . 'extensions";a:1:{s:4:"core";a:3:{s:5:"pages";a:1:{s:10:"categories";s:10:"categories";}s:17:"sys_file_metadata";a:1:{s:10:"categories";s:10:"categories";}s:10:"tt_content";a:1:{s:10:"categories";s:10:"categories";}}}s:20:"' . "\0" . '*' . "\0" . 'addedCategoryTabs";a:3:{s:5:"pages";s:5:"pages";s:17:"sys_file_metadata";s:17:"sys_file_metadata";s:10:"tt_content";s:10:"tt_content";}s:11:"' . "\0" . '*' . "\0" . 'template";s:68:"
+  'categoryRegistry' => 'O:40:"TYPO3\\CMS\\Core\\Category\\CategoryRegistry":4:{s:11:"' . "\0" . '*' . "\0" . 'registry";a:4:{s:5:"pages";a:1:{s:10:"categories";a:1:{s:8:"position";s:18:"replace:categories";}}s:17:"sys_file_metadata";a:1:{s:10:"categories";a:1:{s:8:"position";s:18:"replace:categories";}}s:10:"tt_content";a:1:{s:10:"categories";a:1:{s:8:"position";s:18:"replace:categories";}}s:36:"tx_cart_domain_model_product_product";a:2:{s:13:"main_category";a:2:{s:5:"label";s:107:"LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.main_category";s:18:"fieldConfiguration";a:3:{s:8:"minitems";i:0;s:8:"maxitems";i:1;s:8:"multiple";b:0;}}s:10:"categories";a:1:{s:5:"label";s:104:"LLL:EXT:cart/Resources/Private/Language/locallang_db.xlf:tx_cart_domain_model_product_product.categories";}}}s:13:"' . "\0" . '*' . "\0" . 'extensions";a:2:{s:4:"core";a:3:{s:5:"pages";a:1:{s:10:"categories";s:10:"categories";}s:17:"sys_file_metadata";a:1:{s:10:"categories";s:10:"categories";}s:10:"tt_content";a:1:{s:10:"categories";s:10:"categories";}}s:4:"cart";a:1:{s:36:"tx_cart_domain_model_product_product";a:2:{s:13:"main_category";s:13:"main_category";s:10:"categories";s:10:"categories";}}}s:20:"' . "\0" . '*' . "\0" . 'addedCategoryTabs";a:4:{s:5:"pages";s:5:"pages";s:17:"sys_file_metadata";s:17:"sys_file_metadata";s:10:"tt_content";s:10:"tt_content";s:36:"tx_cart_domain_model_product_product";s:36:"tx_cart_domain_model_product_product";}s:11:"' . "\0" . '*' . "\0" . 'template";s:68:"
 
 
 CREATE TABLE %s (
