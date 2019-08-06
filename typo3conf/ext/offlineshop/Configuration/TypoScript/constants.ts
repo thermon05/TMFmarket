@@ -1,6 +1,6 @@
 rootId = 1
 siteTitle = Cange Global Market
-# cat=rootline/ctext/a; type=string; label=rootline class
+# cat=rootline/ctext/a; type=string; label=rootline classkjjkjl
 rootlineClass = navigation
 
 # cat=rootline/ctext/a; type=string; label=rootline class
